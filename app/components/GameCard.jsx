@@ -1,39 +1,74 @@
-import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import TimeCard from "./TimeCard";
+import isBrasilGame from "../utils/IsBrasilGame";
+import { useState } from "react";
 
 export default function GameCard({ game }) {
+  const [isFavorito, setIsFavorito] = useState(false);
   return (
-    <View style={styles.jogo}>
-      <Text style={styles.grupo}>
-        GRUPO {game.grupo} {game.confronto}
-      </Text>
+    <View style={styles.container}>
+      <View
+        style={[
+          styles.jogo,
+          isBrasilGame(game) ? { backgroundColor: "#11273d" } : {},
+        ]}
+      >
+        <Text style={styles.grupo}>
+          GRUPO {game.grupo} {game.confronto}
+        </Text>
 
-      <View style={styles.linhaPrincipal}>
-        <TimeCard siglaTime={game.sigla_casa} />
-        <View style={styles.horario}>
-          <Text style={styles.hora}>{game.hora_brasilia}</Text>
-          <Text style={styles.subTitulo}>VS</Text>
+        <View style={styles.linhaPrincipal}>
+          <TimeCard siglaTime={game.sigla_casa} />
+          <View style={styles.horario}>
+            <Text style={styles.hora}>{game.hora_brasilia}</Text>
+            <Text style={styles.subTitulo}>VS</Text>
+          </View>
+
+          <TimeCard siglaTime={game.sigla_fora} />
         </View>
 
-        <TimeCard siglaTime={game.sigla_fora} />
+        <View style={styles.local}>
+          <Text style={styles.subTitulo}>{game.estadio}</Text>
+          <Text style={styles.subTitulo}>
+            {game.cidade} • {game.pais}
+          </Text>
+        </View>
       </View>
-
-      <View style={styles.local}>
-        <Text style={styles.subTitulo}>{game.estadio}</Text>
-        <Text style={styles.subTitulo}>
-          {game.cidade} • {game.pais}
-        </Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => {
+          setIsFavorito(!isFavorito);
+        }}
+        style={styles.btnFavorito}
+      >
+        <Image
+          style={[
+            styles.imgFavorite,
+            isFavorito ? { tintColor: "#ce0808" } : {},
+          ]}
+          source={require("../assets/heart.png")}
+        />
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    borderTopWidth: 1,
+    borderColor: "#2d455e",
+    marginBottom: 5,
+  },
   jogo: {
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#1e2d3d",
-    paddingBottom: 15,
+    padding: 20,
+    borderRadius: 10,
   },
   grupo: {
     color: "#8fa3b8",
@@ -55,11 +90,21 @@ const styles = StyleSheet.create({
   },
   local: {
     marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
   subTitulo: {
     color: "#8fa3b8",
     fontSize: 12,
+    textAlign: "center",
+  },
+  imgFavorite: {
+    width: 30,
+    height: 30,
+    tintColor: "#888",
+  },
+  btnFavorito: {
+    position: "absolute",
+    bottom: 20,
+    maxWidth: 30,
+    left: 20,
   },
 });

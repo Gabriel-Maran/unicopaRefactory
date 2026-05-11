@@ -34,19 +34,22 @@ export default function App() {
       source={require("./app/assets/bg-overlay.png")}
     >
       <Image style={styles.logo} source={require("./app/assets/unicopa.png")} />
+      <Text style={styles.title}>CALENDÁRIO</Text>
       <TextInput
-        style={{ color: "#fff" }}
+        style={styles.searchGroup}
+        placeholderTextColor={"#9c9b9b"}
+        textAlign="center"
         placeholder="Procurar por grupo"
         onChangeText={(groupSelected) => setGroupSelected(groupSelected)}
         value={groupSelected}
         maxLength={1}
       />
-      <Text style={styles.title}>CALENDÁRIO</Text>
       <SectionList
         sections={jogos}
         keyExtractor={(item, index) => item.id || index.toString()}
         renderItem={() => null}
         renderSectionHeader={({ section }) => <DiaCard section={section} />}
+        style={styles.listGames}
       />
     </ImageBackground>
   );
@@ -58,6 +61,9 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#040b13",
     alignItems: "center",
+  },
+  listGames: {
+    marginTop: 25,
   },
   logo: {
     marginTop: 20,
@@ -118,5 +124,13 @@ const styles = StyleSheet.create({
   subTitulo: {
     color: "#8fa3b8",
     fontSize: 12,
+  },
+  searchGroup: {
+    color: "#fff",
+    borderColor: "#8fa3b8",
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 10,
+    width: 220,
   },
 });

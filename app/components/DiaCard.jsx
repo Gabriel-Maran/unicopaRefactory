@@ -26,15 +26,16 @@ export default function DiaCard({ section }) {
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: 20,
+    marginBottom: 25,
     backgroundColor: "#0c1b2a",
     width: 320,
     borderRadius: 12,
-    padding: 15,
   },
   data: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 10,
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#1e2d3d",
   },
 });

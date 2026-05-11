@@ -4,7 +4,7 @@ export function groupGameByDate(jogos) {
     if (!acc[data]) {
       acc[data] = [];
     }
-    acc[data].push(jogo);
+    acc[data].push({ ...jogo, isFavorito: false });
     return acc;
   }, {});
 
