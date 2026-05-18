@@ -9,9 +9,9 @@ import {
 import TimeCard from "./TimeCard";
 import isBrasilGame from "../utils/IsBrasilGame";
 import { useState } from "react";
+import { atualizaFavorito } from "../utils/FavoritaJogo";
 
-export default function GameCard({ game }) {
-  const [isFavorito, setIsFavorito] = useState(false);
+export default function GameCard({ game, atualizaJogoMemoria }) {
   return (
     <View style={styles.container}>
       <View
@@ -27,7 +27,7 @@ export default function GameCard({ game }) {
         <View style={styles.linhaPrincipal}>
           <TimeCard siglaTime={game.sigla_casa} />
           <View style={styles.horario}>
-            <Text style={styles.hora}>{game.hora_brasilia}</Text>
+            <Text style={styles.hora}>{game.hora_brasilia.slice(0, 5)}</Text>
             <Text style={styles.subTitulo}>VS</Text>
           </View>
 
@@ -42,15 +42,20 @@ export default function GameCard({ game }) {
         </View>
       </View>
       <TouchableOpacity
-        onPress={() => {
-          setIsFavorito(!isFavorito);
+        onPress={async () => {
+          try {
+            await atualizaFavorito(game.id, !game.isFavorito);
+            atualizaJogoMemoria(game.id);
+          } catch (error) {
+            console.error("Erro ao atualizar favorito:", error);
+          }
         }}
         style={styles.btnFavorito}
       >
         <Image
           style={[
             styles.imgFavorite,
-            isFavorito ? { tintColor: "#ce0808" } : {},
+            game.isfavorito ? { tintColor: "#ce0808" } : {},
           ]}
           source={require("../assets/heart.png")}
         />

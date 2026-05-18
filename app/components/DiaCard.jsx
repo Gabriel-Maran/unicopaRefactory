@@ -4,7 +4,7 @@ import { dataFormater } from "../utils/DateFormater";
 import { isThisDateToday } from "../utils/IsThisTodayDate";
 import { useEffect } from "react";
 
-export default function DiaCard({ section }) {
+export default function DiaCard({ section, atualizaJogoMemoria }) {
   return (
     <View style={styles.card}>
       <Text
@@ -18,7 +18,11 @@ export default function DiaCard({ section }) {
         {dataFormater(section.title)}
       </Text>
       {section.data.map((jogo) => (
-        <GameCard key={jogo.id} game={jogo} />
+        <GameCard
+          atualizaJogoMemoria={atualizaJogoMemoria}
+          key={jogo.id}
+          game={jogo}
+        />
       ))}
     </View>
   );
